@@ -3,6 +3,7 @@
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 
 import useStoreModal from "@/hooks/use-store-modal";
 
@@ -10,6 +11,7 @@ import Modal from "@/components/ui/modal";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 const formSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
@@ -17,6 +19,7 @@ const formSchema = z.object({
 
 const StoreModal = () => {
   const storeModal = useStoreModal();
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -26,7 +29,16 @@ const StoreModal = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    try {
+      setLoading(true);
+
+      const response = await axios.post("/api/stores", values);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -41,7 +53,7 @@ const StoreModal = () => {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="Name" />
+                    <Input {...field} placeholder="Name" disabled={loading} />
                   </FormControl>
                   <FormDescription></FormDescription>
                   <FormMessage>{form.formState.errors.name?.message}</FormMessage>
@@ -51,10 +63,10 @@ const StoreModal = () => {
           </form>
         </Form>
         <div className="pt-6 space-x-2 flex items-center justify-end">
-          <Button variant="outline" onClick={storeModal.onClose}>
+          <Button variant="outline" onClick={storeModal.onClose} disabled={loading}>
             Cancel
           </Button>
-          <Button type="submit" onClick={form.handleSubmit(onSubmit)}>
+          <Button type="submit" onClick={form.handleSubmit(onSubmit)} disabled={loading}>
             Submit
           </Button>
         </div>
