@@ -7,7 +7,7 @@ const StoreModal = () => {
   const storeModal = useStoreModal();
 
   return (
-    <Modal title="Title Modal" description="Description Modal" isOpen={storeModal.isOpen} onClose={storeModal.closeModal}>
+    <Modal title="Title Modal" description="Description Modal" isOpen={storeModal.isOpen} onClose={storeModal.onClose}>
       Children Modal
     </Modal>
   );
