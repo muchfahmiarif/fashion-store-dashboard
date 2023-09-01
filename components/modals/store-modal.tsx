@@ -12,6 +12,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
@@ -34,8 +35,10 @@ const StoreModal = () => {
 
       const response = await axios.post("/api/stores", values);
       console.log(response.data);
+      toast.success("Store created");
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }
