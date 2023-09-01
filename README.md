@@ -1,8 +1,8 @@
-<p align="center">
+<h1 align="center">
   <a href="#" rel="noreferrer">
     <img src="https://user-images.githubusercontent.com/94236726/265000131-b2e72152-5276-4ff1-961c-bc98fa1cf9e1.png" alt="banner zephyra store" />
   </a>
-</p>
+</h1>
 
 <h2 align="center">
 Zephyra Store
@@ -22,10 +22,10 @@ Thank you :)
 ### ⚡ Features
 
 - [x] Login / Register Dashboard
-- [x] Payment Gateway ([Stripe](https://stripe.com/))
-- [x] Responsive Design
-- [x] Dark Mode
-- [x] Typescript Support
+- [ ] Payment Gateway ([Stripe](https://stripe.com/))
+- [ ] Responsive Design
+- [ ] Dark Mode
+- [ ] Typescript Support
 
 ### 📦 How to Install
 
@@ -52,10 +52,6 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
 
 DATABASE_URL='your_database_url'
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="your_cloudinary_cloud_name"
-STRIPE_API_KEY="your_stripe_api_key"
-FRONTEND_STORE_URL=http://localhost:3001
-STRIPE_WEBHOOK_SECRET="your_stripe_webhook_secret"
 ```
 
 4. Connet with planetscale and push the database
