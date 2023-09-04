@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
@@ -66,10 +67,11 @@ const StoreModal = () => {
           </form>
         </Form>
         <div className="pt-6 space-x-2 flex items-center justify-end">
-          <Button variant="outline" onClick={storeModal.onClose} disabled={loading}>
+          <Button disabled={loading} variant={`outline`} onClick={storeModal.onClose}>
             Cancel
           </Button>
           <Button type="submit" onClick={form.handleSubmit(onSubmit)} disabled={loading}>
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Submit
           </Button>
         </div>
