@@ -13,5 +13,5 @@ export default function SetupPage() {
     }
   }, [isOpen, onOpen]);
 
-  return <main className="flex min-h-screen flex-col items-center justify-between p-24">Test</main>;
+  return null;
 }

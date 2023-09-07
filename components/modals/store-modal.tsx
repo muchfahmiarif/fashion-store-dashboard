@@ -11,7 +11,7 @@ import Modal from "@/components/ui/modal";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
 
@@ -33,10 +33,10 @@ const StoreModal = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setLoading(true);
-
       const response = await axios.post("/api/stores", values);
       console.log(response.data);
       toast.success("Store created");
+      window.location.assign(`/${response.data.id}`); // redirect to store page with no cache
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
