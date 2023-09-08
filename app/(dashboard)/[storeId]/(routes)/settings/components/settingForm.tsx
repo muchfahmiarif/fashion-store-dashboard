@@ -53,15 +53,32 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
     }
   };
 
+  const onDelete = async () => {
+    try {
+      setLoading(true);
+
+      await axios.delete(`/api/stores/${params.storeId}`);
+      router.refresh();
+      router.push("/");
+      toast.success("Store deleted successfully!");
+    } catch (error) {
+      console.log(error);
+      toast.error("Make sure you removed all products and categories first!");
+    } finally {
+      setLoading(false);
+      setOpen(false);
+    }
+  };
+
   return (
     <>
       <AlertModal
         isOpen={open}
-        loading={loading}
         onClose={() => {
           setOpen(false);
         }}
-        onConfirm={async () => {}}
+        onConfirm={onDelete}
+        loading={loading}
       />
       <div className="flex items-center justify-between">
         <Heading title="Settings" description="Update your store settings." />
