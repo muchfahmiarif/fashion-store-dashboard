@@ -1,10 +1,13 @@
 "use client";
 
 import React from "react";
+import toast from "react-hot-toast";
+import axios from "axios";
 import { Trash2Icon } from "lucide-react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
+import { useParams, useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import Heading from "@/components/ui/heading";
@@ -26,6 +29,8 @@ type SettingFormValue = z.infer<typeof formSchema>;
 const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const params = useParams();
+  const router = useRouter();
 
   const form = useForm<SettingFormValue>({
     resolver: zodResolver(formSchema),
@@ -34,6 +39,17 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
 
   const onSubmit = async (values: SettingFormValue) => {
     console.log(values);
+    try {
+      setLoading(true);
+
+      axios.patch(`/api/stores/${params.storeId}`, values);
+      router.refresh();
+      toast.success("Store updated successfully!");
+    } catch (error) {
+      toast.error("Something went wrong!");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -41,10 +57,12 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       <div className="flex items-center justify-between">
         <Heading title="Settings" description="Update your store settings." />
         <Button
+          disabled={loading}
           variant={"destructive"}
           size={"sm"}
           onClick={() => {
             console.log("clicked");
+            setOpen(true);
           }}>
           <Trash2Icon className="h-4 w-4" />
         </Button>
