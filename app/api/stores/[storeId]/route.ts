@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs";
 import prismadb from "@/lib/prismadb";
 
-export async function PATCH(req: Request, res: Response, { params }: { params: { storeId: string } }) {
+export async function PATCH(req: Request, { params }: { params: { storeId: string } }) {
   try {
     const { userId } = auth();
     const body = await req.json();
@@ -17,7 +17,7 @@ export async function PATCH(req: Request, res: Response, { params }: { params: {
       return new NextResponse("Missing name", { status: 400 });
     }
 
-    if (!params.storeId) {
+    if (!params?.storeId) {
       return new NextResponse("Missing storeId", { status: 400 });
     }
 

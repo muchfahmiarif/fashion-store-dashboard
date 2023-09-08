@@ -69,6 +69,11 @@ npm run dev
 
 6. Open your browser and go to http://localhost:3000
 
+
+### 🔖 Reference
+- [Coding with Antonio](https://www.youtube.com/watch?v=5miHyP6lExg)
+- [Jost tried coding](https://www.youtube.com/watch?v=dD1fpoGHuC8)
+
 ### 💬 Comment and Suggestion
 
 - [Create Issue ↗️](https://github.com/muchfahmiarif/fashion-store-dashboard/issues)
@@ -78,11 +83,11 @@ npm run dev
 <h5 align="center">
 Follow my social media
 </h5> 
-<p align="center">
-  <a href="https://instagram.com/muchfahmiarif" rel="noreferrer">
+<p align="center" >
+  <a href="https://instagram.com/muchfahmiarif" rel="noreferrer" >
     <img src="https://user-images.githubusercontent.com/122178246/265005753-00a7fe08-2e2e-476d-bcd7-dfba07c137b4.png" alt="instagram" />
   </a>
-  <a href="https://t.me/muchfahmiarif" rel="noreferrer" style="padding-left:10px; padding-right:10px">
+  <a href="https://t.me/muchfahmiarif" rel="noreferrer" style="margin-inline:20px">
     <img src="https://user-images.githubusercontent.com/122178246/265005750-8908bd25-cc11-4f95-9214-c5d6da928573.png" alt="telegram" />
   </a>
   <a href="https://www.linkedin.com/in/muchfahmiarif/" rel="noreferrer">

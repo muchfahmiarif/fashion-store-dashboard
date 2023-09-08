@@ -3,7 +3,7 @@
 import React from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { Trash2Icon } from "lucide-react";
+import { Loader2, Trash2Icon } from "lucide-react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { set, useForm } from "react-hook-form";
@@ -42,7 +42,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
     try {
       setLoading(true);
 
-      axios.patch(`/api/stores/${params.storeId}`, values);
+      await axios.patch(`/api/stores/${params.storeId}`, values);
       router.refresh();
       toast.success("Store updated successfully!");
     } catch (error) {
@@ -87,6 +87,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
             />
           </div>
           <Button type="submit" disabled={loading}>
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Save change
           </Button>
         </form>
