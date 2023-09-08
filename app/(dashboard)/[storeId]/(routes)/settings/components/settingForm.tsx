@@ -15,6 +15,7 @@ import { Separator } from "@/components/ui/separator";
 import { Store } from "@prisma/client";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import AlertModal from "@/components/modals/alert.modal";
 
 interface SettingsFormProps {
   initialData: Store;
@@ -54,6 +55,14 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
 
   return (
     <>
+      <AlertModal
+        isOpen={open}
+        loading={loading}
+        onClose={() => {
+          setOpen(false);
+        }}
+        onConfirm={async () => {}}
+      />
       <div className="flex items-center justify-between">
         <Heading title="Settings" description="Update your store settings." />
         <Button
