@@ -57,8 +57,9 @@ const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => {
               <CommandGroup>
                 {formatedItems.map((store) => (
                   <CommandItem key={store.value} onSelect={() => onStoreSelected(store)} className="text-sm">
-                    <Check className={cn("mr-2 h-4 w-4", currentStore?.value === store.value ? "opacity-100" : "opacity-0")} />
+                    <StoreIcon className="mr-2 h-4 w-4" />
                     {store.label}
+                    <Check className={cn("mr-2 h-4 w-4 ml-auto", currentStore?.value === store.value ? "opacity-100" : "opacity-0")} />
                   </CommandItem>
                 ))}
               </CommandGroup>

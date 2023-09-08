@@ -25,7 +25,7 @@ Thank you :)
 - [ ] Payment Gateway ([Stripe](https://stripe.com/))
 - [ ] Responsive Design
 - [ ] Dark Mode
-- [ ] Typescript Support
+- [x] Typescript Support
 
 ### 📦 How to Install
 
