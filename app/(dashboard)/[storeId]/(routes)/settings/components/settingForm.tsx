@@ -16,6 +16,7 @@ import { Store } from "@prisma/client";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import AlertModal from "@/components/modals/alert.modal";
+import AlertApi from "@/components/ui/alert.api";
 
 interface SettingsFormProps {
   initialData: Store;
@@ -118,6 +119,8 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
           </Button>
         </form>
       </Form>
+      <Separator />
+      <AlertApi title="test" description="test" variant="public"></AlertApi>
     </>
   );
 };
