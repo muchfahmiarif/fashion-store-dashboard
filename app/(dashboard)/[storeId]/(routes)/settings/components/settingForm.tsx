@@ -120,7 +120,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
         </form>
       </Form>
       <Separator />
-      <AlertApi title="test" description="test" variant="public"></AlertApi>
+      <AlertApi title="test" description="Copy" variant="public"></AlertApi>
     </>
   );
 };
