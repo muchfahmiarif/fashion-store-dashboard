@@ -17,6 +17,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import AlertModal from "@/components/modals/alert.modal";
 import AlertApi from "@/components/ui/alert.api";
+import { useOrigin } from "@/hooks/useOrigin";
 
 interface SettingsFormProps {
   initialData: Store;
@@ -33,6 +34,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const [loading, setLoading] = React.useState(false);
   const params = useParams();
   const router = useRouter();
+  const origin = useOrigin();
 
   const form = useForm<SettingFormValue>({
     resolver: zodResolver(formSchema),
@@ -120,7 +122,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
         </form>
       </Form>
       <Separator />
-      <AlertApi title="test" description="Copy" variant="public"></AlertApi>
+      <AlertApi title="test" description={`${origin}/api/${params.storeId}`} variant="public"></AlertApi>
     </>
   );
 };
