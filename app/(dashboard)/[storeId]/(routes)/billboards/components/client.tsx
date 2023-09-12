@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
 import Heading from "@/components/ui/heading";
@@ -15,7 +15,7 @@ const BillboardClient = () => {
     <>
       <div className="flex items-center justify-between">
         <Heading title={`Billboards (0)`} description={`Manage billboards for yout store`} />
-        <Button variant={`default`} onClick={() => router.push(`/${params.storeId}/billboard/new`)}>
+        <Button variant={`default`} onClick={() => router.push(`/${params.storeId}/billboards/new`)}>
           <Plus className="mr-2 h-4 w-4" />
           Add Billboard
         </Button>
