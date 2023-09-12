@@ -17,6 +17,7 @@ import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
+  description: z.string().min(3, "Description must be at least 3 characters"),
 });
 
 const StoreModal = () => {
@@ -27,6 +28,7 @@ const StoreModal = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      description: "",
     },
   });
 
@@ -46,7 +48,7 @@ const StoreModal = () => {
   };
 
   return (
-    <Modal title="Title Modal" description="Description Modal" isOpen={storeModal.isOpen} onClose={storeModal.onClose}>
+    <Modal title="Name Store" description="Description Modal" isOpen={storeModal.isOpen} onClose={storeModal.onClose}>
       <div className="py-2 space-y-4 pb-4">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -61,6 +63,20 @@ const StoreModal = () => {
                   </FormControl>
                   <FormDescription></FormDescription>
                   <FormMessage>{form.formState.errors.name?.message}</FormMessage>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="Description" disabled={loading} />
+                  </FormControl>
+                  <FormDescription></FormDescription>
+                  <FormMessage>{form.formState.errors.description?.message}</FormMessage>
                 </FormItem>
               )}
             />
