@@ -14,7 +14,7 @@ datasource db {
 model Store {
   id          String      @id @default(cuid())
   name        String
-  description String?
+  description String
   userId      String
   billboards  Billboard[] @relation("StoreBillboard")
   createAt    DateTime    @default(now())
