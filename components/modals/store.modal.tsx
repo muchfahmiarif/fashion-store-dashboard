@@ -18,6 +18,7 @@ import { Loader2 } from "lucide-react";
 const formSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
   description: z.string().min(3, "Description must be at least 3 characters"),
+  group: z.enum(["public", "private"], { required_error: "Please select a group" }),
 });
 
 const StoreModal = () => {
@@ -29,6 +30,7 @@ const StoreModal = () => {
     defaultValues: {
       name: "",
       description: "",
+      group: "public",
     },
   });
 

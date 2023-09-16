@@ -7,7 +7,7 @@ export async function PATCH(req: Request, { params }: { params: { storeId: strin
     const { userId } = auth();
     const body = await req.json();
 
-    const { name, description } = body;
+    const { name, description, group } = body;
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -19,6 +19,10 @@ export async function PATCH(req: Request, { params }: { params: { storeId: strin
 
     if (!description) {
       return new NextResponse("Missing description", { status: 400 });
+    }
+
+    if (!group) {
+      return new NextResponse("Missing group", { status: 400 });
     }
 
     if (!params?.storeId) {
@@ -33,6 +37,7 @@ export async function PATCH(req: Request, { params }: { params: { storeId: strin
       data: {
         name,
         description,
+        group,
       },
     });
 
