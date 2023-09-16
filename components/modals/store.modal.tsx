@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
 const formSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
@@ -79,6 +80,33 @@ const StoreModal = () => {
                   </FormControl>
                   <FormDescription></FormDescription>
                   <FormMessage>{form.formState.errors.description?.message}</FormMessage>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="group"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Group</FormLabel>
+                  <FormControl>
+                    <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-wrap space-x-3">
+                      <FormItem className="flex items-center space-x-2 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="public" />
+                        </FormControl>
+                        <FormLabel className="font-normal cursor-pointer">Public</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-2 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="private" />
+                        </FormControl>
+                        <FormLabel className="font-normal cursor-pointer">Private</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormDescription></FormDescription>
+                  <FormMessage>{form.formState.errors.group?.message}</FormMessage>
                 </FormItem>
               )}
             />
