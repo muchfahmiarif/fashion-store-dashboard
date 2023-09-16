@@ -26,8 +26,8 @@ model Billboard {
   id       String   @id @default(cuid())
   storeId  String
   store    Store    @relation("StoreBillboard", fields: [storeId], references: [id])
-  label    String
-  imageUrl String
+  label    String // Data can be null
+  imageUrl String // Data can be null
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 
