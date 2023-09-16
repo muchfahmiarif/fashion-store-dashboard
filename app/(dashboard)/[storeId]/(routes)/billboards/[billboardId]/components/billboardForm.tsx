@@ -12,37 +12,45 @@ import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Heading from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
-import { Store } from "@prisma/client";
+import { Billboard } from "@prisma/client";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import AlertModal from "@/components/modals/alert.modal";
 import AlertApi from "@/components/ui/alert.api";
 import { useOrigin } from "@/hooks/useOrigin";
 
-interface SettingsFormProps {
-  initialData: Store;
+interface BillboardFormProps {
+  initialData: Billboard | null;
 }
 
+type BillboardFormValue = z.infer<typeof formSchema>;
+
 const formSchema = z.object({
-  name: z.string().min(3).max(255),
-  description: z.string().min(3).max(255),
+  label: z.string().nonempty({ message: "Label is required" }),
+  imageUrl: z.string().nonempty({ message: "Image URL is required" }),
 });
 
-type SettingFormValue = z.infer<typeof formSchema>;
-
-const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
+const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const params = useParams();
   const router = useRouter();
   const origin = useOrigin();
 
-  const form = useForm<SettingFormValue>({
+  const title = initialData ? "Update Billboard" : "Create Billboard";
+  const description = initialData ? "Update your billboard." : "Add new billboard";
+  const toasMessage = initialData ? "Billboard updated successfully!" : "Billboard created successfully!";
+  const action = initialData ? "Save changes!" : "Create";
+
+  const form = useForm<BillboardFormValue>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData,
+    defaultValues: initialData || {
+      label: "",
+      imageUrl: "",
+    },
   });
 
-  const onSubmit = async (values: SettingFormValue) => {
+  const onSubmit = async (values: BillboardFormValue) => {
     console.log(values);
     try {
       setLoading(true);
@@ -85,17 +93,21 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
         loading={loading}
       />
       <div className="flex items-center justify-between">
-        <Heading title="Settings" description="Update your store settings." />
-        <Button
-          disabled={loading}
-          variant={"destructive"}
-          size={"sm"}
-          onClick={() => {
-            console.log("clicked");
-            setOpen(true);
-          }}>
-          <Trash2Icon className="h-4 w-4" />
-        </Button>
+        <Heading title={title} description={description} />
+        {initialData ? (
+          <Button
+            disabled={loading}
+            variant={"destructive"}
+            size={"sm"}
+            onClick={() => {
+              console.log("clicked");
+              setOpen(true);
+            }}>
+            <Trash2Icon className="h-4 w-4" />
+          </Button>
+        ) : (
+          <></>
+        )}
       </div>
       <Separator />
       <Form {...form}>
@@ -103,24 +115,24 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
           <div className="grid grid-cols-3 gap-8">
             <FormField
               control={form.control}
-              name={`name`}
+              name={`label`}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Label</FormLabel>
                   <FormControl>
-                    <Input placeholder="Store Name" {...field} disabled={loading} />
+                    <Input placeholder="Billboard label" {...field} disabled={loading} />
                   </FormControl>
-                  <FormDescription>Update your store name.</FormDescription>
+                  <FormDescription>Update your name billboard.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name={`description`}
+              name={`imageUrl`}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>Upload image</FormLabel>
                   <FormControl>
                     <Input placeholder="Store Description" {...field} disabled={loading} />
                   </FormControl>
@@ -132,14 +144,13 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
           </div>
           <Button type="submit" disabled={loading}>
             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Save change
+            {action}
           </Button>
         </form>
       </Form>
       <Separator />
-      <AlertApi title="test" description={`${origin}/api/${params.storeId}`} variant="public"></AlertApi>
     </>
   );
 };
 
-export default SettingsForm;
+export default BillboardForm;
