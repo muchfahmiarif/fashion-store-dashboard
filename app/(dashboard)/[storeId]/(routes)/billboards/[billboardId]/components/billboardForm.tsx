@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import AlertModal from "@/components/modals/alert.modal";
 import AlertApi from "@/components/ui/alert.api";
 import { useOrigin } from "@/hooks/useOrigin";
+import ImageUpload from "@/components/ui/imageUpload";
 
 interface BillboardFormProps {
   initialData: Billboard | null;
@@ -134,7 +135,7 @@ const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
                 <FormItem>
                   <FormLabel>Upload image</FormLabel>
                   <FormControl>
-                    <Input placeholder="Store Description" {...field} disabled={loading} />
+                    <ImageUpload value={field.value ? [field.value] : []} />
                   </FormControl>
                   <FormDescription>Update your store description.</FormDescription>
                   <FormMessage />
