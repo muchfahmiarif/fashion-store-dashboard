@@ -135,7 +135,16 @@ const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
                 <FormItem>
                   <FormLabel>Upload image</FormLabel>
                   <FormControl>
-                    <ImageUpload value={field.value ? [field.value] : []} />
+                    <ImageUpload
+                      value={field.value ? [field.value] : []}
+                      disabled={loading}
+                      onChange={(url) => {
+                        field.onChange(url); // onChange from field who we get from render, we got 4 parameters (name, value, ref, onChange)
+                      }}
+                      onRemove={() => {
+                        field.onChange(""); // onChange from field who we get from render, we got 4 parameters (name, value, ref, onChange)
+                      }}
+                    />
                   </FormControl>
                   <FormDescription>Update your store description.</FormDescription>
                   <FormMessage />
