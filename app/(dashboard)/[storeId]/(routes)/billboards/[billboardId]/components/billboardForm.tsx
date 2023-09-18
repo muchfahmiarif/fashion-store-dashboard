@@ -40,7 +40,7 @@ const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
 
   const title = initialData ? "Update Billboard" : "Create Billboard";
   const description = initialData ? "Update your billboard." : "Add new billboard";
-  const toasMessage = initialData ? "Billboard updated successfully!" : "Billboard created successfully!";
+  const toastMessage = initialData ? "Billboard updated successfully!" : "Billboard created successfully!";
   const action = initialData ? "Save changes!" : "Create";
 
   const form = useForm<BillboardFormValue>({
@@ -107,27 +107,15 @@ const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
             <Trash2Icon className="h-4 w-4" />
           </Button>
         ) : (
-          <></>
+          <>
+            <h1>Hello World</h1>
+          </>
         )}
       </div>
       <Separator />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
           <div className="grid grid-cols-3 gap-8">
-            <FormField
-              control={form.control}
-              name={`label`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Label</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Billboard label" {...field} disabled={loading} />
-                  </FormControl>
-                  <FormDescription>Update your name billboard.</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <FormField
               control={form.control}
               name={`imageUrl`}
@@ -147,6 +135,20 @@ const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
                     />
                   </FormControl>
                   <FormDescription>Update your store description.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name={`label`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Label</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Billboard label" {...field} disabled={loading} />
+                  </FormControl>
+                  <FormDescription>Update your name billboard.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

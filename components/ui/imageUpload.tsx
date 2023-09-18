@@ -30,22 +30,34 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ disabled, onChange, onRemove,
   return (
     <>
       <div className="mb-4 flex items-center gap-4">
-        {value.map((url) => (
-          <div key={url} className="relative w-[200px] h-[200px] rounded overflow-hidden">
-            <div className="z-10 absolute top-2 right-2">
-              <Button
-                type="button"
-                onClick={() => {
-                  onRemove(url);
-                }}
-                variant={"destructive"}
-                size={"icon"}>
-                <Trash2 className="h-4 w-4" />
-              </Button>
+        {value.length ? (
+          value.map((url) => (
+            <div key={url} className="relative w-[200px] h-[200px] rounded overflow-hidden">
+              <div className="z-10 absolute top-2 right-2">
+                <Button
+                  type="button"
+                  onClick={() => {
+                    onRemove(url);
+                  }}
+                  variant={"destructive"}
+                  size={"icon"}>
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+              <Image fill className="object-cover" alt="Image" src={url} />
             </div>
-            <Image fill className="object-cover" alt="Image" src={url} />
-          </div>
-        ))}
+          ))
+        ) : (
+          <>
+            <div className="w-[200px] h-[200px] rounded overflow-hidden">
+              <div className="absolute">
+                <div className="bg-blue-700 rounded">
+                  <h1 className="flex justify-center items-center w-[200px] h-[200px]">Hello World</h1>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
       <CldUploadWidget onUpload={onUpload} uploadPreset="qklhqrek">
         {({ open }) => {
