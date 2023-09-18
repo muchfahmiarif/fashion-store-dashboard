@@ -49,13 +49,26 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ disabled, onChange, onRemove,
           ))
         ) : (
           <>
-            <div className="w-[200px] h-[200px] rounded overflow-hidden">
-              <div className="absolute">
-                <div className="bg-blue-700 rounded">
-                  <h1 className="flex justify-center items-center w-[200px] h-[200px]">Hello World</h1>
-                </div>
-              </div>
-            </div>
+            <CldUploadWidget onUpload={onUpload} uploadPreset="qklhqrek">
+              {({ open }) => {
+                const onClick = () => {
+                  open();
+                };
+                return (
+                  <div className="w-[200px] h-[200px] rounded overflow-hidden">
+                    <div className="absolute">
+                      <div onClick={onClick} className="cursor-pointer">
+                        <div className="bg-gray-100 rounded">
+                          <h1 className="flex justify-center items-center w-[200px] h-[200px] text-black/40 hover:text-black/70 text-sm duration-200">
+                            Upload your image
+                          </h1>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              }}
+            </CldUploadWidget>
           </>
         )}
       </div>

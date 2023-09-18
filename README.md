@@ -13,11 +13,18 @@ Thank you :)
 
 ### 🚀 Dependencies
 
-- [NextJs 13](https://nextjs.org/)
+- [NextJs 13 (App Router)](https://nextjs.org/)
 - [Shadcn/ui](https://ui.shadcn.com/)
 - [Zustand](https://github.com/pmndrs/zustand)
 - [Zod](https://zod.dev/)
 - [Typescript](https://www.typescriptlang.org/)
+- [Prisma](https://www.prisma.io/)
+- [Cloudinary](https://cloudinary.com/)
+- [Clerk](https://clerk.dev/)
+- [Planetscale](https://planetscale.com/)
+- [Stripe](https://stripe.com/)
+- [React Hot Toast](https://react-hot-toast.com/)
+
 
 ### ⚡ Features
 
@@ -26,6 +33,7 @@ Thank you :)
 - [ ] Responsive Design
 - [ ] Dark Mode
 - [x] Typescript Support
+- [ ] Lazy Loading 
 
 ### 📦 How to Install
 
@@ -41,17 +49,19 @@ git clone https://github.com/muchfahmiarif/fashion-store-dashboard.git
 npm install
 ```
 
-3. Setup your `environment` variable
+3. Copy .env.example to .env and fill the value
 
 ```bash
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="your_public_key"
-CLERK_SECRET_KEY="your_secret_key"
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_public_key
+CLERK_SECRET_KEY=your_secret_key
 NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
 
 DATABASE_URL='your_database_url'
+
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="your_cloudinary_cloud_name"
 ```
 
 4. Connet with planetscale and push the database

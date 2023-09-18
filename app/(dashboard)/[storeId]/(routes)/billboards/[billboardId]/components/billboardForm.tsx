@@ -134,7 +134,7 @@ const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
                       }}
                     />
                   </FormControl>
-                  <FormDescription>Update your store description.</FormDescription>
+                  <FormDescription>Upload your billboard image</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
