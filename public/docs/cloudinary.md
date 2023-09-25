@@ -7,13 +7,14 @@ I used [Cloudinary](https://cloudinary.com/) to store the images of the products
 ## How to use Cloudinary
 
 ### 1. Create an account
+
 Open [Cloudinary](https://cloudinary.com/) and create an account until your screen looks like this:
 
-![](https://i.ibb.co/0jdrSjk/cloudinary-1.png)
+![Screenshot of Cloudinary dashboard](https://i.ibb.co/0jdrSjk/cloudinary-1.png "Cloudinary dashboard")
 
 After that, choose `Dashboard` and you will see your dashboard like this:
 
-![](https://i.ibb.co/Vv2Wt90/cloudinary-2.png)
+![Screenshot of Cloudinary dashboard](https://i.ibb.co/Vv2Wt90/cloudinary-2.png "Cloudinary dashboard")
 
 ### 2. Cloudinary with Next Cloudinary package
 
@@ -23,10 +24,18 @@ In my case, I used the Next Cloudinary upload widget to upload the images to Clo
 2. Choose [cloudinary upload widget](https://next.cloudinary.dev/clduploadwidget/basic-usage) on sidebar, follow the instruction and you need to get code `upload preset`
 3. Open settings on cloudinary, and choose `Upload` tab. You will see `Upload presets` and click `Add upload preset` button. You will see this:
 
-![](https://i.ibb.co/ryS1ycC/cloudinary-3.png)
+![Screenshot of Cloudinary dashboard](https://i.ibb.co/ryS1ycC/cloudinary-3.png "Cloudinary dashboard")
 
 4. Copy code on `Upload preset name` and choose `Unsigned` on `Signing mode` and click `Save` button.
 
-![](https://i.ibb.co/d4BLb0n/cloudinary-4.png)
+![Screenshot of Cloudinary dashboard](https://i.ibb.co/d4BLb0n/cloudinary-4.png "Cloudinary dashboard")
 
-5. You code on Upload image with Next Cloudinary
+5. Paste `upload preset` code to your code
+
+```js
+import { CldUploadWidget } from 'next-cloudinary';
+
+<CldUploadWidget onUpload={onUpload} uploadPreset="your upload preset">
+  // put your code here
+</CldUploadWidget>
+```
