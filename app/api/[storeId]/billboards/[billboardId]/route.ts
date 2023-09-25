@@ -2,6 +2,25 @@ import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs";
 import prismadb from "@/lib/prismadb";
 
+export async function GET(req: Request, { params }: { params: { billboardId: string } }) {
+  try {
+    if (!params.billboardId) {
+      return new NextResponse("Missing billboardId", { status: 400 });
+    }
+
+    const billboard = await prismadb.billboard.findUnique({
+      where: {
+        id: params.billboardId,
+      },
+    });
+
+    return NextResponse.json(billboard);
+  } catch (error) {
+    console.log("[BILLBOARD_GET]", error);
+    return new NextResponse("Internal Server Error", { status: 500 });
+  }
+}
+
 export async function PATCH(req: Request, { params }: { params: { storeId: string; billboardId: string } }) {
   try {
     const { userId } = auth();
@@ -27,7 +46,7 @@ export async function PATCH(req: Request, { params }: { params: { storeId: strin
 
     const storeByUserId = await prismadb.store.findFirst({
       where: {
-        id: params.billboardId,
+        id: params.storeId,
         userId,
       },
     });
