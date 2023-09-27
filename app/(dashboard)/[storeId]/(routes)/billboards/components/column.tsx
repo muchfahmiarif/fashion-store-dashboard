@@ -22,6 +22,6 @@ export const columns: ColumnDef<BillboardColumn>[] = [
   },
   {
     id: "actions",
-    cell: () => <CellAction />,
+    cell: ({ row }) => <CellAction data={row.original} />, // row original is the original data passed to the table
   },
 ];
