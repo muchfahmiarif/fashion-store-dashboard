@@ -15,12 +15,16 @@ import {
 import { Button } from "@/components/ui/button";
 
 import { BillboardColumn } from "./column";
+import { useParams, useRouter } from "next/navigation";
 
 interface CellActionProps {
   data: BillboardColumn;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
+  const router = useRouter();
+  const params = useParams();
+
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
     toast.success("Copied to clipboard!");
@@ -42,7 +46,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
             <Copy className="mr-2 h-4 w-4" />
             Copy Id
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/billboards/${data.id}`)}>
             <Edit2 className="mr-2 h-4 w-4" />
             Update
           </DropdownMenuItem>
