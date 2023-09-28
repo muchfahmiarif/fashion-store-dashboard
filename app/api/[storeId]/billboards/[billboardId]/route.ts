@@ -29,7 +29,7 @@ export async function PATCH(req: Request, { params }: { params: { storeId: strin
     const { label, imageUrl } = body;
 
     if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthenticated", { status: 401 });
     }
 
     if (!label) {
@@ -40,7 +40,7 @@ export async function PATCH(req: Request, { params }: { params: { storeId: strin
       return new NextResponse("Missing imageUrl", { status: 400 });
     }
 
-    if (!params?.billboardId) {
+    if (!params.billboardId) {
       return new NextResponse("Missing billboardId", { status: 400 });
     }
 
@@ -77,7 +77,7 @@ export async function DELETE(req: Request, { params }: { params: { storeId: stri
     const { userId } = auth();
 
     if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthenticated", { status: 401 });
     }
 
     if (!params.billboardId) {
@@ -86,7 +86,7 @@ export async function DELETE(req: Request, { params }: { params: { storeId: stri
 
     const storeByUserId = await prismadb.store.findFirst({
       where: {
-        id: params.billboardId,
+        id: params.storeId,
         userId,
       },
     });

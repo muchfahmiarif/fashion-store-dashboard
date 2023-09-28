@@ -16,7 +16,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>
+        {/* suppressHydrationWarning for suppress the warning that is logged when a server-rendered element mismatches with the client-rendered element */}
+        <body className={inter.className} suppressHydrationWarning={false}>
           {children}
           <ModalProvider />
           <ToastProvider />
