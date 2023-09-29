@@ -19,6 +19,10 @@ const ApiList: React.FC<ApiListProps> = ({ entityName, entityIdName }) => {
   return (
     <>
       <AlertApi title={`GET`} description={`${BASE_URL}/${entityName}`} variant={`public`} />
+      <AlertApi title={`GET`} description={`${BASE_URL}/${entityName}/{${entityIdName}}`} variant={`public`} />
+      <AlertApi title={`POST`} description={`${BASE_URL}/${entityName}`} variant={`admin`} />
+      <AlertApi title={`PATCH`} description={`${BASE_URL}/${entityName}/{${entityIdName}}`} variant={`admin`} />
+      <AlertApi title={`DELETE`} description={`${BASE_URL}/${entityName}/{${entityIdName}}`} variant={`admin`} />
     </>
   );
 };
