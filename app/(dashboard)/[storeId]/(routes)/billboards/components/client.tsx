@@ -1,13 +1,17 @@
 "use client";
 
+import React from "react";
+import { useParams, useRouter } from "next/navigation";
+
+import { Plus } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import Heading from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { Billboard } from "@prisma/client";
-import { Plus } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
-import React from "react";
+import ApiList from "@/components/ui/api-list";
+
 import { BillboardColumn, columns } from "./column";
 
 interface BillboardClientProps {
@@ -29,6 +33,9 @@ const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
       </div>
       <Separator />
       <DataTable columns={columns} data={data} searchKey="label" />
+      <Heading title="API" description="API calls for Billboard" />
+      <Separator />
+      <ApiList entityName="billboards" entityIdName="billboardId" />
     </>
   );
 };
