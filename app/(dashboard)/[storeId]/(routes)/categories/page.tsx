@@ -2,21 +2,25 @@ import React from "react";
 import { format } from "date-fns";
 import BillboardClient from "./components/client";
 import prismadb from "@/lib/prismadb";
-import { BillboardColumn } from "./components/column";
+import { CategoryColumn } from "./components/column";
 
 const CategoriesPage = async ({ params }: { params: { storeId: string } }) => {
   const categories = await prismadb.category.findMany({
     where: {
       storeId: params.storeId,
     },
+    include: {
+      billboard: true,
+    },
     orderBy: {
       createAt: "desc",
     },
   });
 
-  const formattedCategories: BillboardColumn[] = categories.map((item) => ({
+  const formattedCategories: CategoryColumn[] = categories.map((item) => ({
     id: item.id,
     name: item.name,
+    billboardLabel: item.billboard.label,
     createdAt: format(item.createAt, "dd MMM yyyy"),
   }));
 
