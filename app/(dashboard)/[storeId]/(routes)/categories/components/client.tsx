@@ -12,13 +12,13 @@ import { Separator } from "@/components/ui/separator";
 import { Billboard } from "@prisma/client";
 import ApiList from "@/components/ui/api-list";
 
-import { BillboardColumn, columns } from "./column";
+import { CategoryColumn, columns } from "./column";
 
-interface BillboardClientProps {
-  data: BillboardColumn[];
+interface CategoriesClientProps {
+  data: CategoryColumn[];
 }
 
-const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
+const CategoryClient: React.FC<CategoriesClientProps> = ({ data }) => {
   const router = useRouter();
   const params = useParams();
 
@@ -40,4 +40,4 @@ const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
   );
 };
 
-export default BillboardClient;
+export default CategoryClient;

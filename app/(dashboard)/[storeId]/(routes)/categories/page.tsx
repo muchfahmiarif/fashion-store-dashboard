@@ -1,8 +1,8 @@
 import React from "react";
 import { format } from "date-fns";
-import BillboardClient from "./components/client";
 import prismadb from "@/lib/prismadb";
 import { CategoryColumn } from "./components/column";
+import CategoryClient from "./components/client";
 
 const CategoriesPage = async ({ params }: { params: { storeId: string } }) => {
   const categories = await prismadb.category.findMany({
@@ -27,7 +27,7 @@ const CategoriesPage = async ({ params }: { params: { storeId: string } }) => {
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <BillboardClient data={formattedCategories} />
+        <CategoryClient data={formattedCategories} />
       </div>
     </div>
   );
