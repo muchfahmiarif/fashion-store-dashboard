@@ -21,7 +21,7 @@ const CategoriesPage = async ({ params }: { params: { storeId: string } }) => {
     id: item.id,
     name: item.name,
     billboardLabel: item.billboard.label,
-    createdAt: format(item.createAt, "dd MMM yyyy"),
+    createdAt: format(item.createAt, "dd MMM yyyy"), // docs: https://date-fns.org/v2.30.0/docs/format
   }));
 
   return (
