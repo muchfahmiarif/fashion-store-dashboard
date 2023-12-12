@@ -12,7 +12,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Heading from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
-import { Billboard } from "@prisma/client";
+import { Size } from "@prisma/client";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import AlertModal from "@/components/modals/alert.modal";
@@ -20,48 +20,48 @@ import AlertApi from "@/components/ui/alert.api";
 import { useOrigin } from "@/hooks/useOrigin";
 import ImageUpload from "@/components/ui/imageUpload";
 
-interface BillboardFormProps {
-  initialData: Billboard | null;
+interface SizeFormProps {
+  initialData: Size | null;
 }
 
-type BillboardFormValue = z.infer<typeof formSchema>;
+type SizeFormValue = z.infer<typeof formSchema>;
 
 const formSchema = z.object({
-  label: z.string().nonempty({ message: "Label is required" }),
-  imageUrl: z.string().nonempty({ message: "Image URL is required" }),
+  name: z.string().min(3, { message: "Name must be at least 3 characters long" }),
+  value: z.string().min(1),
 });
 
-const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
+const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const params = useParams();
   const router = useRouter();
   const origin = useOrigin();
 
-  const title = initialData ? "Update Billboard" : "Create Billboard";
-  const description = initialData ? "Update your billboard." : "Add new billboard";
-  const toastMessage = initialData ? "Billboard updated successfully!" : "Billboard created successfully!";
+  const title = initialData ? "Update size" : "Create size";
+  const description = initialData ? "Update your size." : "Add new size";
+  const toastMessage = initialData ? "Size updated successfully!" : "Size created successfully!";
   const action = initialData ? "Save changes!" : "Create";
 
-  const form = useForm<BillboardFormValue>({
+  const form = useForm<SizeFormValue>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
-      label: "",
-      imageUrl: "",
+      name: "",
+      value: "",
     },
   });
 
-  const onSubmit = async (values: BillboardFormValue) => {
+  const onSubmit = async (values: SizeFormValue) => {
     console.log(values);
     try {
       setLoading(true);
       if (initialData) {
-        await axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, values);
+        await axios.patch(`/api/${params.storeId}/sizes/${params.sizeId}`, values);
       } else {
-        await axios.post(`/api/${params.storeId}/billboards`, values);
+        await axios.post(`/api/${params.storeId}/sizes`, values);
       }
       router.refresh();
-      router.push(`/${params.storeId}/billboards`);
+      router.push(`/${params.storeId}/sizes`);
       toast.success(toastMessage);
     } catch (error) {
       toast.error("Something went wrong!");
@@ -74,13 +74,13 @@ const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
     try {
       setLoading(true);
 
-      await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`);
+      await axios.delete(`/api/${params.storeId}/sizes/${params.sizeId}`);
       router.refresh();
       router.push("/");
-      toast.success("Billboard deleted successfully!");
+      toast.success(toastMessage);
     } catch (error) {
       console.log(error);
-      toast.error("Make sure you removed all Categories using this Billboard.");
+      toast.error("Make sure you removed all products using thissize first.");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -122,37 +122,28 @@ const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
           <div className="grid grid-cols-3 gap-8">
             <FormField
               control={form.control}
-              name={`imageUrl`}
+              name={`name`}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Upload image</FormLabel>
+                  <FormLabel>Label</FormLabel>
                   <FormControl>
-                    <ImageUpload
-                      value={field.value ? [field.value] : []}
-                      disabled={loading}
-                      onChange={(url) => {
-                        field.onChange(url); // onChange from field who we get from render, we got 4 parameters (name, value, ref, onChange)
-                      }}
-                      onRemove={() => {
-                        field.onChange(""); // onChange from field who we get from render, we got 4 parameters (name, value, ref, onChange)
-                      }}
-                    />
+                    <Input placeholder="Size name" {...field} disabled={loading} />
                   </FormControl>
-                  <FormDescription>Upload your billboard image</FormDescription>
+                  <FormDescription>Update your size.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name={`label`}
+              name={`value`}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Label</FormLabel>
                   <FormControl>
-                    <Input placeholder="Billboard label" {...field} disabled={loading} />
+                    <Input placeholder="Szie value" {...field} disabled={loading} />
                   </FormControl>
-                  <FormDescription>Update your name billboard.</FormDescription>
+                  <FormDescription>Update your value.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -168,4 +159,4 @@ const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
   );
 };
 
-export default BillboardForm;
+export default SizeForm;
