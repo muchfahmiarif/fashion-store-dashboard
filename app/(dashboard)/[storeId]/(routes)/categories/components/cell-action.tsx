@@ -16,12 +16,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
-import { BillboardColumn } from "./column";
+import { CategoryColumn } from "./column";
 import axios from "axios";
 import AlertModal from "@/components/modals/alert.modal";
 
 interface CellActionProps {
-  data: BillboardColumn;
+  data: CategoryColumn;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -40,12 +40,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     try {
       setLoading(true);
 
-      await axios.delete(`/api/${params.storeId}/billboards/${data.id}`);
+      await axios.delete(`/api/${params.storeId}/categories/${data.id}`);
       router.refresh();
-      toast.success("Billboard deleted successfully!");
+      toast.success("Category deleted successfully!");
     } catch (error) {
       console.log(error);
-      toast.error("Make sure you removed all Categories using this Billboard.");
+      toast.error("Make sure you removed all Categories using this Category.");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -77,7 +77,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
               <Copy className="mr-2 h-4 w-4" />
               Copy Id
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/billboards/${data.id}`)}>
+            <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/categories/${data.id}`)}>
               <Edit2 className="mr-2 h-4 w-4" />
               Update
             </DropdownMenuItem>

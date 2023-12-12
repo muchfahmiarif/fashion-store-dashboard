@@ -42,7 +42,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ initialData, billboards }) 
   const title = initialData ? "Update category" : "Create category";
   const description = initialData ? "Update your category." : "Add new category";
   const toastMessage = initialData ? "Category updated successfully!" : "Category created successfully!";
-  const action = initialData ? "Save changes!" : "Create";
+  const action = initialData ? "Save changes" : "Create";
 
   const form = useForm<CategoryFormValue>({
     resolver: zodResolver(formSchema),
@@ -77,7 +77,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ initialData, billboards }) 
 
       await axios.delete(`/api/${params.storeId}/categories/${params.categoryId}`);
       router.refresh();
-      router.push("/");
+      router.push(`/${params.storeId}/categories`);
       toast.success("Category deleted successfully!");
     } catch (error) {
       console.log(error);
@@ -163,6 +163,10 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ initialData, billboards }) 
               )}
             />
           </div>
+          <Button disabled={loading} onClick={() => router.back()} variant={"ghost"} className="mr-3">
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Cancel
+          </Button>
           <Button type="submit" disabled={loading}>
             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {action}

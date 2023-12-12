@@ -28,7 +28,7 @@ const CategoryClient: React.FC<CategoriesClientProps> = ({ data }) => {
         <Heading title={`Categories (${data.length})`} description={`Manage categories for yout store`} />
         <Button variant={`default`} onClick={() => router.push(`/${params.storeId}/categories/new`)}>
           <Plus className="mr-2 h-4 w-4" />
-          Add Billboard
+          Add Data
         </Button>
       </div>
       <Separator />
