@@ -5,7 +5,7 @@ import prismadb from "@/lib/prismadb";
 import { formatter } from "@/lib/utils";
 
 import BillboardClient from "./components/client";
-import { BillboardColumn } from "./components/column";
+import { ProductColumn } from "./components/column";
 
 const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
   const products = await prismadb.product.findMany({
@@ -22,9 +22,9 @@ const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
     },
   });
 
-  const formattedProducts: BillboardColumn[] = products.map((item) => ({
+  const formattedProducts: ProductColumn[] = products.map((item) => ({
     id: item.id,
-    label: item.name,
+    name: item.name,
     isFeature: item.isFeature,
     isArchived: item.isArchived,
     // if type data "decimal" is not supported by the formatter, add function toNumber() after price
