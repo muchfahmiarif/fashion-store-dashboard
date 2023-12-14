@@ -20,30 +20,30 @@ import AlertApi from "@/components/ui/alert.api";
 import { useOrigin } from "@/hooks/useOrigin";
 import ImageUpload from "@/components/ui/imageUpload";
 
-interface BillboardFormProps {
+interface ProductFormProps {
   initialData: Billboard | null;
 }
 
-type BillboardFormValue = z.infer<typeof formSchema>;
+type ProductFormValue = z.infer<typeof formSchema>;
 
 const formSchema = z.object({
   label: z.string().nonempty({ message: "Label is required" }),
   imageUrl: z.string().nonempty({ message: "Image URL is required" }),
 });
 
-const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
+const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const params = useParams();
   const router = useRouter();
   const origin = useOrigin();
 
-  const title = initialData ? "Update Billboard" : "Create Billboard";
-  const description = initialData ? "Update your billboard." : "Add new billboard";
-  const toastMessage = initialData ? "Billboard updated successfully!" : "Billboard created successfully!";
+  const title = initialData ? "Update products" : "Create products";
+  const description = initialData ? "Update your products." : "Add new products";
+  const toastMessage = initialData ? "Product updated successfully!" : "Product created successfully!";
   const action = initialData ? "Save changes!" : "Create";
 
-  const form = useForm<BillboardFormValue>({
+  const form = useForm<ProductFormValue>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
       label: "",
@@ -51,7 +51,7 @@ const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
     },
   });
 
-  const onSubmit = async (values: BillboardFormValue) => {
+  const onSubmit = async (values: ProductFormValue) => {
     console.log(values);
     try {
       setLoading(true);
@@ -168,4 +168,4 @@ const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => {
   );
 };
 
-export default BillboardForm;
+export default ProductForm;
