@@ -21,16 +21,33 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ disabled, onChange, onRemove,
     setIsMounted(true);
   }, []);
 
+  if (!isMounted) return null;
+
   const onUpload = (result: any) => {
     onChange(result.info.secure_url); // from console.log(result) we can see that the url is in result.info.secure_url
   };
 
-  if (!isMounted) return null;
-
   return (
     <>
       <div className="mb-4 flex items-center gap-4">
-        {value.length ? (
+        {value.map((url) => (
+          <div key={url} className="relative w-[200px] h-[200px] rounded overflow-hidden">
+            <div className="z-10 absolute top-2 right-2">
+              <Button
+                type="button"
+                onClick={() => {
+                  onRemove(url);
+                }}
+                variant={"destructive"}
+                size={"icon"}>
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
+            <Image fill className="object-cover" alt="Image" src={url} />
+          </div>
+        ))}
+        {/* If use code on this btm can't upload multiple image, need edit code */}
+        {/* {value.length ? (
           value.map((url) => (
             <div key={url} className="relative w-[200px] h-[200px] rounded overflow-hidden">
               <div className="z-10 absolute top-2 right-2">
@@ -70,8 +87,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ disabled, onChange, onRemove,
               }}
             </CldUploadWidget>
           </>
-        )}
+        )} */}
       </div>
+      {/* Inser preset btm this line */}
       <CldUploadWidget onUpload={onUpload} uploadPreset="qklhqrek">
         {({ open }) => {
           const onClick = () => {

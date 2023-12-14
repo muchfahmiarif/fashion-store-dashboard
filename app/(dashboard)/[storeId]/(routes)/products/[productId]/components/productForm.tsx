@@ -144,19 +144,19 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
           <div className="grid grid-cols-3 gap-8">
             <FormField
               control={form.control}
-              name={`imageUrl`}
+              name={`images`}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Upload image</FormLabel>
+                  <FormLabel>Images</FormLabel>
                   <FormControl>
                     <ImageUpload
-                      value={field.value ? [field.value] : []}
+                      value={field.value.map((item) => item.url)}
                       disabled={loading}
                       onChange={(url) => {
-                        field.onChange(url); // onChange from field who we get from render, we got 4 parameters (name, value, ref, onChange)
+                        field.onChange([...field.value, { url }]);
                       }}
-                      onRemove={() => {
-                        field.onChange(""); // onChange from field who we get from render, we got 4 parameters (name, value, ref, onChange)
+                      onRemove={(url) => {
+                        field.onChange([...field.value.filter((current) => current.url !== url)]);
                       }}
                     />
                   </FormControl>
