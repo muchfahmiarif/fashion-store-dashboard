@@ -28,9 +28,12 @@ type ColorsFormValue = z.infer<typeof formSchema>;
 
 const formSchema = z.object({
   name: z.string().min(3, { message: "Name must be at least 3 characters long" }),
-  value: z.string().min(4).regex(/^#/, {
-    message: "Value must be a valid hex color",
-  }),
+  value: z
+    .string()
+    .min(4)
+    .regex(/^#?([a-f0-9]{6}|[a-f0-9]{3})$/, {
+      message: "Value must be a valid hex color",
+    }),
 });
 
 const ColorsForm: React.FC<ColorsFormProps> = ({ initialData }) => {
