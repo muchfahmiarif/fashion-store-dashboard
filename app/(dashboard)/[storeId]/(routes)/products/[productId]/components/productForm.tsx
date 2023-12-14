@@ -12,23 +12,38 @@ import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Heading from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
-import { Billboard } from "@prisma/client";
+import { Billboard, Image, Product } from "@prisma/client";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import AlertModal from "@/components/modals/alert.modal";
 import AlertApi from "@/components/ui/alert.api";
 import { useOrigin } from "@/hooks/useOrigin";
 import ImageUpload from "@/components/ui/imageUpload";
+import { url } from "inspector";
 
 interface ProductFormProps {
-  initialData: Billboard | null;
+  initialData:
+    | (Product & {
+        images: Image[];
+      })
+    | null;
 }
 
 type ProductFormValue = z.infer<typeof formSchema>;
 
 const formSchema = z.object({
-  label: z.string().nonempty({ message: "Label is required" }),
-  imageUrl: z.string().nonempty({ message: "Image URL is required" }),
+  name: z.string().min(3, { message: "Name must be at least 3 characters long" }),
+  images: z
+    .object({
+      url: z.string(),
+    })
+    .array(),
+  price: z.number().min(1).positive({ message: "Price must be positive" }),
+  categoryId: z.string().min(1, { message: "Category is required" }),
+  colorId: z.string().min(1, { message: "Color is required" }),
+  sizeId: z.string().min(1, { message: "Size is required" }),
+  isFeature: z.boolean().default(false).optional(),
+  isArchived: z.boolean().default(false).optional(),
 });
 
 const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
@@ -36,7 +51,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
   const [loading, setLoading] = React.useState(false);
   const params = useParams();
   const router = useRouter();
-  const origin = useOrigin();
 
   const title = initialData ? "Update products" : "Create products";
   const description = initialData ? "Update your products." : "Add new products";
@@ -45,9 +59,17 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
 
   const form = useForm<ProductFormValue>({
     resolver: zodResolver(formSchema),
+    // if type data price is "decimal" change this initial data to ↴
+    // initialData ? {...initialData, price: parseFloat(String(initialData?.price))} : {name: "", images: [], price: 0, ...}
     defaultValues: initialData || {
-      label: "",
-      imageUrl: "",
+      name: "",
+      images: [],
+      price: 0,
+      categoryId: "",
+      colorId: "",
+      sizeId: "",
+      isFeature: false,
+      isArchived: false,
     },
   });
 

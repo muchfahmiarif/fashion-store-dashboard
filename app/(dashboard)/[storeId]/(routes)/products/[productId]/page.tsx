@@ -3,14 +3,14 @@ import ProductForm from "./components/productForm";
 
 type ProductIdProps = {
   params: {
-    ProductId: string;
+    productId: string;
   };
 };
 
 const ProductId: React.FC<ProductIdProps> = async ({ params }) => {
   const product = await prismadb.product.findUnique({
     where: {
-      id: params.ProductId,
+      id: params.productId,
     },
     include: {
       images: true,
