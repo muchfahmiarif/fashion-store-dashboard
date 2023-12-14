@@ -1,7 +1,10 @@
 import React from "react";
 import { format } from "date-fns";
-import BillboardClient from "./components/client";
+
 import prismadb from "@/lib/prismadb";
+import { formatter } from "@/lib/utils";
+
+import BillboardClient from "./components/client";
 import { BillboardColumn } from "./components/column";
 
 const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
@@ -24,7 +27,11 @@ const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
     label: item.name,
     isFeature: item.isFeature,
     isArchived: item.isArchived,
-    price: item.price,
+    // if type data "decimal" is not supported by the formatter, add function toNumber() after price
+    price: formatter.format(item.price),
+    category: item.category.name,
+    size: item.size.name,
+    color: item.color.value,
     createdAt: format(item.createAt, "dd MMM yyyy"),
   }));
 
