@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import AlertModal from "@/components/modals/alert.modal";
 import ImageUpload from "@/components/ui/imageUpload";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface ProductFormProps {
   initialData:
@@ -273,6 +274,36 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories, colo
                   </Select>
                   <FormDescription>Update your color.</FormDescription>
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name={`isFeature`}
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <FormControl>
+                    <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>Featured</FormLabel>
+                    <FormDescription>This product will appear on the home page</FormDescription>
+                  </div>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name={`isArchived`}
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <FormControl>
+                    <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>Archived</FormLabel>
+                    <FormDescription>This product will not appear anywhere in the store</FormDescription>
+                  </div>
                 </FormItem>
               )}
             />
