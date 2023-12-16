@@ -16,6 +16,10 @@ export async function POST(req: Request, { params }: { params: { storeId: string
       return new NextResponse("Name is required", { status: 400 });
     }
 
+    if (!images || !images.length) {
+      return new NextResponse("Images is required", { status: 400 });
+    }
+
     if (!price) {
       return new NextResponse("Price is required", { status: 400 });
     }
@@ -47,11 +51,21 @@ export async function POST(req: Request, { params }: { params: { storeId: string
       return new NextResponse("Unauthorized", { status: 403 });
     }
 
-    const billboard = await prismadb.billboard.create({
+    const billboard = await prismadb.product.create({
       data: {
-        label,
-        imageUrl,
+        name,
+        price,
+        sizeId,
+        colorId,
+        categoryId,
+        isFeature,
+        isArchived,
         storeId: params.storeId,
+        images: {
+          createMany: {
+            data: [...images.map((image: { url: string }) => image)],
+          },
+        },
       },
     });
 
