@@ -80,12 +80,12 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories, colo
     try {
       setLoading(true);
       if (initialData) {
-        await axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, values);
+        await axios.patch(`/api/${params.storeId}/products/${params.productId}`, values);
       } else {
-        await axios.post(`/api/${params.storeId}/billboards`, values);
+        await axios.post(`/api/${params.storeId}/products`, values);
       }
       router.refresh();
-      router.push(`/${params.storeId}/billboards`);
+      router.push(`/${params.storeId}/products`);
       toast.success(toastMessage);
     } catch (error) {
       toast.error("Something went wrong!");
@@ -98,13 +98,13 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories, colo
     try {
       setLoading(true);
 
-      await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`);
+      await axios.delete(`/api/${params.storeId}/products/${params.productId}`);
       router.refresh();
       router.push("/");
-      toast.success("Billboard deleted successfully!");
+      toast.success("Product deleted successfully!");
     } catch (error) {
       console.log(error);
-      toast.error("Make sure you removed all Categories using this Billboard.");
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
       setOpen(false);
