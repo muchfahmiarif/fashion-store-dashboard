@@ -12,7 +12,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Heading from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
-import { Image, Product } from "@prisma/client";
+import { Category, Color, Image, Product, Size } from "@prisma/client";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import AlertModal from "@/components/modals/alert.modal";
@@ -25,6 +25,9 @@ interface ProductFormProps {
         images: Image[];
       })
     | null;
+  categories: Category[];
+  colors: Color[];
+  sizes: Size[];
 }
 
 type ProductFormValue = z.infer<typeof formSchema>;
@@ -44,7 +47,7 @@ const formSchema = z.object({
   isArchived: z.boolean().default(false).optional(),
 });
 
-const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
+const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories, colors, sizes }) => {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const params = useParams();
@@ -139,30 +142,31 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
       <Separator />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
+          {/* <div className="grid grid-cols-3 gap-8"> */}
+          <FormField
+            control={form.control}
+            name={`images`}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Images</FormLabel>
+                <FormControl>
+                  <ImageUpload
+                    value={field.value.map((item) => item.url)}
+                    disabled={loading}
+                    onChange={(url) => {
+                      field.onChange([...field.value, { url }]);
+                    }}
+                    onRemove={(url) => {
+                      field.onChange([...field.value.filter((current) => current.url !== url)]);
+                    }}
+                  />
+                </FormControl>
+                <FormDescription>Upload your billboard image</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <div className="grid grid-cols-3 gap-8">
-            <FormField
-              control={form.control}
-              name={`images`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Images</FormLabel>
-                  <FormControl>
-                    <ImageUpload
-                      value={field.value.map((item) => item.url)}
-                      disabled={loading}
-                      onChange={(url) => {
-                        field.onChange([...field.value, { url }]);
-                      }}
-                      onRemove={(url) => {
-                        field.onChange([...field.value.filter((current) => current.url !== url)]);
-                      }}
-                    />
-                  </FormControl>
-                  <FormDescription>Upload your billboard image</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <FormField
               control={form.control}
               name={`name`}
@@ -196,7 +200,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               name={`categoryId`}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Billboard</FormLabel>
+                  <FormLabel>Category</FormLabel>
                   <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
@@ -205,15 +209,69 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                     </FormControl>
                     <SelectContent>
                       <SelectGroup>
-                        {billboards.map((category) => (
+                        {categories.map((category) => (
                           <SelectItem key={category.id} value={category.id}>
-                            {category.label}
+                            {category.name}
                           </SelectItem>
                         ))}
                       </SelectGroup>
                     </SelectContent>
                   </Select>
-                  <FormDescription>Update your name category.</FormDescription>
+                  <FormDescription>Update your category.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name={`sizeId`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Size</FormLabel>
+                  <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder={`Select a size`} defaultValue={field.value} />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        {sizes.map((size) => (
+                          <SelectItem key={size.id} value={size.id}>
+                            {size.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>Update your category.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name={`colorId`}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Color</FormLabel>
+                  <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder={`Select a color`} defaultValue={field.value} />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        {colors.map((color) => (
+                          <SelectItem key={color.id} value={color.id}>
+                            {color.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>Update your color.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
