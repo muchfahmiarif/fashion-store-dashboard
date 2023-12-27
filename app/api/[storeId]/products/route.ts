@@ -76,6 +76,7 @@ export async function POST(req: Request, { params }: { params: { storeId: string
   }
 }
 
+// Must be tested get products by store id
 export async function GET(req: Request, { params }: { params: { storeId: string } }) {
   try {
     const { searchParams } = new URL(req.url);
