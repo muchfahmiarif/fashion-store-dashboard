@@ -40,7 +40,7 @@ const formSchema = z.object({
       url: z.string(),
     })
     .array(),
-  price: z.number().min(1).positive({ message: "Price must be positive" }),
+  price: z.coerce.number().min(1).positive({ message: "Price must be positive" }),
   categoryId: z.string().min(1, { message: "Category is required" }),
   colorId: z.string().min(1, { message: "Color is required" }),
   sizeId: z.string().min(1, { message: "Size is required" }),
