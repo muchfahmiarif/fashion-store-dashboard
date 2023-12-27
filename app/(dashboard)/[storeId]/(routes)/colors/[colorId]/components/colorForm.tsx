@@ -19,6 +19,7 @@ import AlertModal from "@/components/modals/alert.modal";
 import AlertApi from "@/components/ui/alert.api";
 import { useOrigin } from "@/hooks/useOrigin";
 import ImageUpload from "@/components/ui/imageUpload";
+import Link from "next/link";
 
 interface ColorsFormProps {
   initialData: Color | null;
@@ -134,7 +135,7 @@ const ColorsForm: React.FC<ColorsFormProps> = ({ initialData }) => {
                   <FormControl>
                     <Input placeholder="Colors name" {...field} disabled={loading} />
                   </FormControl>
-                  <FormDescription>Update your colors.</FormDescription>
+                  <FormDescription>Update your colors name.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -151,7 +152,12 @@ const ColorsForm: React.FC<ColorsFormProps> = ({ initialData }) => {
                       <div className="border p-4 rounded-full" style={{ backgroundColor: field.value }} />
                     </div>
                   </FormControl>
-                  <FormDescription>Update your colors.</FormDescription>
+                  <FormDescription>
+                    Update your colors.{" "}
+                    <Link href={"https://g.co/kgs/vsxuKh"} className="text-blue-500 tracking-tighter underline" target="_blank">
+                      find more color here
+                    </Link>
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

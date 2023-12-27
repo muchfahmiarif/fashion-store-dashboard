@@ -2,15 +2,15 @@ import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs";
 import prismadb from "@/lib/prismadb";
 
-export async function GET(req: Request, { params }: { params: { productsId: string } }) {
+export async function GET(req: Request, { params }: { params: { productId: string } }) {
   try {
-    if (!params.productsId) {
-      return new NextResponse("Missing productsId", { status: 400 });
+    if (!params.productId) {
+      return new NextResponse("Missing productId", { status: 400 });
     }
 
     const product = await prismadb.product.findUnique({
       where: {
-        id: params.productsId,
+        id: params.productId,
       },
       include: {
         color: true,
@@ -110,7 +110,7 @@ export async function PATCH(req: Request, { params }: { params: { storeId: strin
 
     return NextResponse.json(product);
   } catch (error) {
-    console.log("[PRODUCTS_PATCH]", error);
+    console.log("[PRODUCT_PATCH]", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
