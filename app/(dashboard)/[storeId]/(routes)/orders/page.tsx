@@ -2,31 +2,47 @@ import React from "react";
 import { format } from "date-fns";
 import BillboardClient from "./components/client";
 import prismadb from "@/lib/prismadb";
-import { BillboardColumn } from "./components/column";
+import { OrdersColumns } from "./components/column";
+import { formatter } from "@/lib/utils";
 
-const BillboardPage = async ({ params }: { params: { storeId: string } }) => {
-  const billboard = await prismadb.billboard.findMany({
+const OrdersPage = async ({ params }: { params: { storeId: string } }) => {
+  const orders = await prismadb.order.findMany({
     where: {
       storeId: params.storeId,
+    },
+    include: {
+      orderItems: {
+        include: {
+          product: true,
+        },
+      },
     },
     orderBy: {
       createAt: "desc",
     },
   });
 
-  const formattedBillboard: BillboardColumn[] = billboard.map((item) => ({
+  const formattedOrders: OrdersColumns[] = orders.map((item) => ({
     id: item.id,
-    label: item.label,
+    phone: item.phone,
+    address: item.address,
+    isPaid: item.isPaid,
+    products: item.orderItems.map((orderItems) => orderItems.product.name).join(", "),
+    totalPrice: formatter.format(
+      item.orderItems.reduce((total, item) => {
+        return total + Number(item.product.price);
+      }, 0)
+    ),
     createdAt: format(item.createAt, "dd MMM yyyy"),
   }));
 
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <BillboardClient data={formattedBillboard} />
+        <BillboardClient data={formattedOrders} />
       </div>
     </div>
   );
 };
 
-export default BillboardPage;
+export default OrdersPage;
